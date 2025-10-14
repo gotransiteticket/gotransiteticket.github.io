@@ -141,7 +141,6 @@
 		bottom: 20%;
 		left: 50%;
 		transform: translateX(-50%);
-		border-radius:6px;
 	}
 
 	.status{
@@ -201,7 +200,7 @@
 	/* back button */
 	.back-wrapper{
 		text-align:center;
-		margin-top: 16px;
+		margin-top: 200px;
 	}
 	.btn {
 		display:inline-block;
@@ -365,6 +364,33 @@
 					<path d="M331.714 0H334.786V55H331.714V0Z" fill="#B3B6BB"/>
 					<path d="M322.5 0H325.571V55H322.5V0Z" fill="#B3B6BB"/>
 					<path d="M307.143 0H310.214V55H307.143V0Z" fill="#B3B6BB"/>
+					<path d="M294.857 0H304.071V55H294.857V0Z" fill="#B3B6BB"/>
+					<path d="M285.643 0H291.786V55H285.643V0Z" fill="#B3B6BB"/>
+					<path d="M267.214 0H276.429V55H267.214V0Z" fill="#B3B6BB"/>
+					<path d="M258 0H264.143V55H258V0Z" fill="#B3B6BB"/>
+					<path d="M245.714 0H248.786V55H245.714V0Z" fill="#B3B6BB"/>
+					<path d="M239.571 0H242.643V55H239.571V0Z" fill="#B3B6BB"/>
+					<path d="M227.286 0H236.5V55H227.286V0Z" fill="#B3B6BB"/>
+					<path d="M211.929 0H224.214V55H211.929V0Z" fill="#B3B6BB"/>
+					<path d="M205.786 0H208.857V55H205.786V0Z" fill="#B3B6BB"/>
+					<path d="M199.643 0H202.714V55H199.643V0Z" fill="#B3B6BB"/>
+					<path d="M187.357 0H193.5V55H187.357V0Z" fill="#B3B6BB"/>
+					<path d="M172 0H175.071V55H172V0Z" fill="#B3B6BB"/>
+					<path d="M162.786 0H165.857V55H162.786V0Z" fill="#B3B6BB"/>
+					<path d="M144.357 0H156.643V55H144.357V0Z" fill="#B3B6BB"/>
+					<path d="M138.214 0H141.286V55H138.214V0Z" fill="#B3B6BB"/>
+					<path d="M129 0H135.143V55H129V0Z" fill="#B3B6BB"/>
+					<path d="M110.571 0H119.786V55H110.571V0Z" fill="#B3B6BB"/>
+					<path d="M104.429 0H107.5V55H104.429V0Z" fill="#B3B6BB"/>
+					<path d="M86 0H92.1428V55H86V0Z" fill="#B3B6BB"/>
+					<path d="M76.7857 0H79.8572V55H76.7857V0Z" fill="#B3B6BB"/>
+					<path d="M70.6429 0H73.7144V55H70.6429V0Z" fill="#B3B6BB"/>
+					<path d="M61.4286 0H67.5714V55H61.4286V0Z" fill="#B3B6BB"/>
+					<path d="M43.0001 0H52.2144V55H43.0001V0Z" fill="#B3B6BB"/>
+					<path d="M33.7857 0H39.9286V55H33.7857V0Z" fill="#B3B6BB"/>
+					<path d="M15.3571 0H24.5714V55H15.3571V0Z" fill="#B3B6BB"/>
+					<path d="M9.21422 0H12.2856V55H9.21422V0Z" fill="#B3B6BB"/>
+					<path d="M-3.48091e-05 0H6.14282V55H-3.48091e-05V0Z" fill="#B3B6BB"/>
 					<!-- ... trimmed for brevity (kept in file) -->
 				</svg>
 				<div class="activebg">
@@ -490,13 +516,15 @@
   // Color swatch click handling
   colorGrid.addEventListener('click', (e) => {
   	const sw = e.target.closest('.color-swatch');
-  	if(!sw) return;
-  	// remove selected from others
-  	document.querySelectorAll('.color-swatch').forEach(el => el.classList.remove('selected'));
-  	sw.classList.add('selected');
-  	chosenColor = sw.dataset.color;
-  	// preview change immediately on modal
-  	root.style.setProperty('--ticket-bg', chosenColor);
+    if(!sw) return;
+    document.querySelectorAll('.color-swatch').forEach(el => el.classList.remove('selected'));
+    sw.classList.add('selected');
+    chosenColor = sw.dataset.color;
+    root.style.setProperty('--ticket-bg', chosenColor);
+    // Set accent to a slightly darker version (e.g., 18% darker)
+    root.style.setProperty('--accent', darkenHex(chosenColor, 0.18));
+    // Update circle color in header
+    document.querySelector('.circlepos circle').setAttribute('fill', chosenColor);
   });
 
   // Continue: apply selections and hide overlay
@@ -533,6 +561,8 @@
   // On first load show overlay (already visible by default). Ensure root vars set.
   root.style.setProperty('--ticket-bg', chosenColor);
   root.style.setProperty('--text-on-ticket', '#ffffff');
+  root.style.setProperty('--accent', darkenHex(chosenColor, 0.18));
+  document.querySelector('.circlepos circle').setAttribute('fill', chosenColor);
 
   // Utility to estimate if color is dark (so text can be white)
   function isColorDark(hex) {
@@ -548,6 +578,19 @@
     const luminance = (0.2126*r + 0.7152*g + 0.0722*b);
     return luminance < 150; // threshold tuned for readable contrast
   }
+
+  //darken a hex color
+  function darkenHex(hex, percent) {
+  hex = hex.replace('#','');
+  if(hex.length === 3) hex = hex.split('').map(c=>c+c).join('');
+  let r = parseInt(hex.substr(0,2),16);
+  let g = parseInt(hex.substr(2,2),16);
+  let b = parseInt(hex.substr(4,2),16);
+  r = Math.max(0, Math.floor(r * (1 - percent)));
+  g = Math.max(0, Math.floor(g * (1 - percent)));
+  b = Math.max(0, Math.floor(b * (1 - percent)));
+  return `#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${b.toString(16).padStart(2,'0')}`;
+}
 
   // Close overlay if user presses Escape
   window.addEventListener('keydown', (ev) => {
