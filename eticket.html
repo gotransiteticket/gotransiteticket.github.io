@@ -1,582 +1,495 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>GO TRANSIT TICKET</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Old+Italic&display=swap" rel="stylesheet">
-	<style>
-	:root{
-		--ticket-bg: #1530B1; /* default blue */
-		--text-on-ticket: #ffffff;
-		--accent: #2D4CEB;
-	}
+<meta charset="UTF-8">
+<title>GO TRANSIT TICKET</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Old+Italic&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ticket-bg: #1530B1; /* default blue */
+  --ticket-light: #5a66e6; /* lighter for line/circle */
+  --text-on-ticket: #ffffff;
+  --accent: #2D4CEB;
+}
 
-	body{
-		font-family: "helvetica neue", Arial, sans-serif;
-		background-color: var(--ticket-bg);
-		margin:0;
-		padding:0;
-		color: #000;
-		min-height:100vh;
-	}
+body{
+  font-family: "helvetica neue", Arial, sans-serif;
+  background-color: var(--ticket-bg);
+  margin:0;
+  padding:0;
+  color: #000;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
 
-	/* ---------- ticket layout ---------- */
-	.ticket{
-		max-width: 900px;
-		margin: 0 auto;
-		background: transparent;
-		padding-bottom: 40px;
-	}
+/* ---------- ticket layout ---------- */
+.ticket{
+  max-width: 900px;
+  width:100%;
+  margin: 0 auto;
+  background: transparent;
+  padding-bottom: 60px;
+}
 
-	.header{
-		background-color: var(--ticket-bg);
-		position:relative;
-		color:var(--text-on-ticket);
-		padding: 30px 0px 20px 0px;
-		text-align:center;
-		border-bottom: 5px solid var(--accent);
-	}
+.header{
+  background-color: var(--ticket-bg);
+  position:relative;
+  color:var(--text-on-ticket);
+  padding: 30px 0px 20px 0px;
+  text-align:center;
+  border-bottom: 5px solid var(--ticket-light);
+}
 
-	.logo{
-		width: 76px;
-		margin-bottom:6px;
-	}
+.logo{
+  width: 76px;
+  margin-bottom:6px;
+}
 
-	.scroll-container {
-		overflow: hidden;
-		white-space: nowrap;
-		width: 100%;
-		padding-bottom:20px;
-		background-color: transparent;
-		color: var(--text-on-ticket);
-		font-family: "helvetica neue";
-		font-size: 18px;
-	}
+.scroll-container {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  padding-bottom:20px;
+  background-color: transparent;
+  color: var(--text-on-ticket);
+  font-family: "helvetica neue";
+  font-size: 18px;
+}
 
-	.scroll-text {
-		display: inline-block;
-		padding-left: 5%;
-		animation: scroll-left 60s linear infinite;
-	}
+.scroll-text {
+  display: inline-block;
+  padding-left: 5%;
+  animation: scroll-left 60s linear infinite;
+}
 
-	@keyframes scroll-left {
-		0% { transform: translateX(0%); }
-		100% { transform: translateX(-100%); }
-	}
+@keyframes scroll-left {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-100%); }
+}
 
-	.route{
-		text-align:center;
-		font-size: 14px;
-		font-weight:normal;
-		letter-spacing: 1px;
-		color: var(--text-on-ticket);
-	}
+.route{
+  text-align:center;
+  font-size: 14px;
+  font-weight:normal;
+  letter-spacing: 1px;
+  color: var(--text-on-ticket);
+}
 
-	.circlepos{
-		position:absolute;
-		width:17px;
-		bottom: -10%;
-		left: 50%;
-		transform: translateX(-50%);
-	}
+.circlepos{
+  position:absolute;
+  width:17px;
+  bottom: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  fill: var(--ticket-light);
+}
 
-	.trip-info{
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		text-align: center;
-		padding: 20px 10px;
-		background: white;
-		border-bottom: 2px dotted #B3B6BB;
-	}
+.trip-info{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  padding: 20px 10px;
+  background: white;
+  border-bottom: 2px dotted #B3B6BB;
+}
 
-	.trip-section{
-		flex:1;
-		color: #424951;
-	}
+.trip-section{
+  flex:1;
+  color: #424951;
+}
 
-	.boldtext{
-		font-size: 46px;
-		font-weight: 600;
-		font-style: normal;
-		padding-bottom: 5px;
-	}
+.boldtext{
+  font-size: 46px;
+  font-weight: 600;
+  font-style: normal;
+  padding-bottom: 5px;
+}
 
-	.subtext{
-		font-size:18px;
-		padding-bottom: 5px;
-		letter-spacing: 0.5px;
-		font-weight: 500;
-	}
+.subtext{
+  font-size:18px;
+  padding-bottom: 5px;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
 
-	.ticket-details{
-		text-align: center;
-		padding: 10px;
-		background: white;
-	}
+.ticket-details{
+  text-align: center;
+  padding: 10px;
+  background: white;
+}
 
-	.ticket-number{
-		font-size: 18px;
-		font-weight: 300;
-		padding-bottom: 20px;
-		color:#424951;
-	}
+.ticket-number{
+  font-size: 18px;
+  font-weight: 300;
+  padding-bottom: 20px;
+  color:#424951;
+}
 
-	.ticket-no{
-		font-size: 18px;
-	}
+.ticket-no{
+  font-size: 18px;
+}
 
-	.ticket-code{
-		position: relative;
-	}
+.ticket-code{
+  position: relative;
+}
 
-	.activebg{
-		padding: 6px 12px;
-		background-color: white;
-		display: inline-block;
-		position: absolute;
-		bottom: 20%;
-		left: 50%;
-		transform: translateX(-50%);
-		border-radius:6px;
-	}
+.activebg{
+  padding: 6px 12px;
+  background-color: white;
+  display: inline-block;
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius:6px;
+  z-index:2;
+}
 
-	.status{
-		color: var(--ticket-bg);
-		font-size: 22px;
-		font-family: "Noto Sans Old Italic", sans-serif;
-  		font-weight: 400;
-  		font-style: normal;
-		-webkit-animation: fadeinout 10s linear infinite;
-		animation: fadeinout 10s linear infinite;
-	}
+.status{
+  color: var(--ticket-bg);
+  font-size: 22px;
+  font-family: "Noto Sans Old Italic", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  -webkit-animation: fadeinout 10s linear infinite;
+  animation: fadeinout 10s linear infinite;
+}
 
-	@keyframes fadeinout {
-  		0%,100% { opacity: 0; }
-  		14%,86% { opacity: 1; }
-	}
+@keyframes fadeinout {
+  0%,100% { opacity: 0; }
+  14%,86% { opacity: 1; }
+}
 
-	.timers{
-		display: flex;
-		justify-content: space-between;
-		padding: 10px 10px;
-		align-items: center;
-		text-align: center;
-		background: white;
-	}
+.timers{
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 10px;
+  align-items: center;
+  text-align: center;
+  background: white;
+}
 
-	.timertitle{
-		font-size: 11px;
-		font-weight: 500;
-		color:#424951;
-	}
+.timertitle{
+  font-size: 11px;
+  font-weight: 500;
+  color:#424951;
+}
 
-	.showtime{
-		font-size: 18px;
-		font-weight: 500;
-		color:#424951;
-	}
+.showtime{
+  font-size: 18px;
+  font-weight: 500;
+  color:#424951;
+}
 
-	.notice{
-		background-color: var(--ticket-bg);
-		text-align: center;
-		font-size: 18px;
-		font-weight: 300;
-		color: var(--text-on-ticket);
-		padding-top: 60px;
-		padding-bottom: 10px;
-	}
+.notice{
+  background-color: var(--ticket-bg);
+  text-align: center;
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--text-on-ticket);
+  padding-top: 60px;
+  padding-bottom: 10px;
+}
 
-	.countdown{
-		font-size: 38px;
-		font-weight: 300;
-		padding-top: 10px;
-		padding-bottom: 60px;
-		color: var(--text-on-ticket);
-	}
+.countdown{
+  font-size: 38px;
+  font-weight: 300;
+  padding-top: 10px;
+  padding-bottom: 60px;
+  color: var(--text-on-ticket);
+}
 
-	/* back button */
-	.back-wrapper{
-		text-align:center;
-		margin-top: 16px;
-	}
-	.btn {
-		display:inline-block;
-		padding:10px 18px;
-		border-radius:8px;
-		border: none;
-		cursor:pointer;
-		font-weight:600;
-	}
+/* back button */
+.back-wrapper{
+  text-align:center;
+  margin-top: 32px;
+}
+.btn {
+  display:inline-block;
+  padding:10px 18px;
+  border-radius:8px;
+  border: none;
+  cursor:pointer;
+  font-weight:600;
+}
 
-	.btn-back {
-		background: #fff;
-		color: #333;
-		box-shadow: 0 2px 6px rgba(0,0,0,0.12);
-	}
+.btn-back {
+  background: #fff;
+  color: #333;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
 
-	/* ---------- modal overlay ---------- */
-	.overlay {
-		position: fixed;
-		inset: 0;
-		background: rgba(0,0,0,0.6);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		z-index: 9999;
-		opacity: 1;
-		transition: opacity 250ms ease;
-	}
+/* ---------- modal overlay ---------- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 250ms ease;
+}
 
-	.overlay.hidden {
-		opacity: 0;
-		pointer-events: none;
-	}
+.overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
 
-	.modal {
-		background: #fff;
-		width: 92%;
-		max-width:520px;
-		padding: 22px;
-		border-radius: 12px;
-		box-shadow: 0 12px 40px rgba(0,0,0,0.25);
-		text-align: left;
-	}
+.modal {
+  background: #fff;
+  width: 92%;
+  max-width:520px;
+  padding: 22px;
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+  text-align: left;
+}
 
-	.modal h2 { margin:0 0 12px 0; font-size:20px; }
-	.form-row { margin-bottom: 12px; }
-	label { display:block; font-size:13px; margin-bottom:6px; color:#333; font-weight:600; }
+.modal h2 { margin:0 0 12px 0; font-size:20px; }
+.form-row { margin-bottom: 12px; }
+label { display:block; font-size:13px; margin-bottom:6px; color:#333; font-weight:600; }
 
-	select {
-		width:100%;
-		padding:10px;
-		border-radius:8px;
-		border:1px solid #d6d6d6;
-		font-size:15px;
-	}
+select {
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid #d6d6d6;
+  font-size:15px;
+}
 
-	.color-grid{
-		display:flex;
-		gap:10px;
-		margin-top:8px;
-		flex-wrap:wrap;
-	}
+.color-grid{
+  display:flex;
+  gap:10px;
+  margin-top:8px;
+  flex-wrap:wrap;
+}
 
-	.color-swatch{
-		width:44px;
-		height:44px;
-		border-radius:50%;
-		border: 3px solid rgba(0,0,0,0.06);
-		cursor:pointer;
-		box-shadow: 0 6px 16px rgba(0,0,0,0.12);
-		display:inline-flex;
-		align-items:center;
-		justify-content:center;
-		position:relative;
-		transition: transform 150ms ease, box-shadow 150ms ease;
-	}
+.color-swatch{
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  border: 3px solid rgba(0,0,0,0.06);
+  cursor:pointer;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
 
-	.color-swatch.selected{
-		outline: 3px solid #fff;
-		transform: translateY(-4px);
-		box-shadow: 0 8px 26px rgba(0,0,0,0.22);
-	}
+.color-swatch.selected{
+  outline: 3px solid #fff;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 26px rgba(0,0,0,0.22);
+}
 
-	.color-label { font-size:12px; text-align:center; margin-top:6px; color:#444; }
+.color-label { font-size:12px; text-align:center; margin-top:6px; color:#444; }
 
-	.row-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:10px; }
+.row-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:10px; }
 
-	.btn-primary {
-		background: var(--ticket-bg);
-		color: #fff;
-		border-radius:8px;
-		padding:10px 16px;
-		border:none;
-		cursor:pointer;
-		font-weight:700;
-	}
+.btn-primary {
+  background: var(--ticket-bg);
+  color: #fff;
+  border-radius:8px;
+  padding:10px 16px;
+  border:none;
+  cursor:pointer;
+  font-weight:700;
+}
 
-	/* small responsiveness */
-	@media (max-width:520px){
-		.boldtext { font-size: 36px; }
-		.modal { padding:16px; }
-	}
+@media (max-width:520px){
+  .boldtext { font-size: 36px; }
+  .modal { padding:16px; }
+}
 
-	</style>
+</style>
 </head>
 <body>
+
 <div class="ticket" id="ticketRoot">
-		<div class="header">
-			<svg class="logo" xmlns="http://www.w3.org/2000/svg" width="76px"  viewBox="-23 -11 46 22">
-				<title>GO Transit logo</title>
-				<defs>
-					<clipPath id="c">
-						<path d="m-23-11h46v22h-46zM23 1v-2h-34v-10h-2v22h2V1z"/>
-					</clipPath>
-				</defs>
-				<path  clip-path="url(#c)" fill="#ffffff" d="m-1 0a11 11 0 1 0-11 11h11zm2 0a1 1 0 0 0 22 0A1 1 0 0 0 1 0z"/>
-			</svg>
+  <div class="header">
+    <svg class="logo" xmlns="http://www.w3.org/2000/svg" width="76px"  viewBox="-23 -11 46 22">
+      <title>GO Transit logo</title>
+      <defs>
+        <clipPath id="c">
+          <path d="m-23-11h46v22h-46zM23 1v-2h-34v-10h-2v22h2V1z"/>
+        </clipPath>
+      </defs>
+      <path  clip-path="url(#c)" fill="#ffffff" d="m-1 0a11 11 0 1 0-11 11h11zm2 0a1 1 0 0 0 22 0A1 1 0 0 0 1 0z"/>
+    </svg>
 
-			<div class="scroll-container">
-				<div class="scroll-text">
-				• &nbsp;&nbsp;&nbsp; GO TRANSIT &nbsp;&nbsp;&nbsp; • &nbsp;&nbsp;&nbsp; GO TRANSIT &nbsp;&nbsp;&nbsp;
-				• &nbsp;&nbsp;&nbsp; GO TRANSIT &nbsp;&nbsp;&nbsp; • &nbsp;&nbsp;&nbsp; GO TRANSIT &nbsp;&nbsp;&nbsp;
-				• &nbsp;&nbsp;&nbsp; GO TRANSIT &nbsp;&nbsp;&nbsp; • &nbsp;&nbsp;&nbsp; GO TRANSIT &nbsp;&nbsp;&nbsp;
-				</div>
-			</div>
+    <div class="scroll-container">
+      <div class="scroll-text">
+        • &nbsp;&nbsp;&nbsp; GO TRANSIT &nbsp;&nbsp;&nbsp; • &nbsp;&nbsp;&nbsp; GO TRANSIT &nbsp;&nbsp;&nbsp;
+        • &nbsp;&nbsp;&nbsp; GO TRANSIT &nbsp;&nbsp;&nbsp; • &nbsp;&nbsp;&nbsp; GO TRANSIT &nbsp;&nbsp;&nbsp;
+        • &nbsp;&nbsp;&nbsp; GO TRANSIT &nbsp;&nbsp;&nbsp; • &nbsp;&nbsp;&nbsp; GO TRANSIT &nbsp;&nbsp;&nbsp;
+      </div>
+    </div>
 
-			<div class="route" id="routeText">University of Waterloo Terminal to Centennial College</div>
-			<svg class="circlepos" width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<circle cx="11.5" cy="11.5" r="10" fill="#1530B1" stroke="white" stroke-width="3"/>
-			</svg>
-		</div>
+    <div class="route" id="routeText">University of Waterloo Terminal to Centennial College</div>
+    <svg class="circlepos" width="23" height="23" viewBox="0 0 23 23">
+      <circle cx="11.5" cy="11.5" r="10" fill="var(--ticket-light)" stroke="white" stroke-width="3"/>
+    </svg>
+  </div>
 
-		<div class="trip-info">
-			<div class="trip-section">
-				<div class="boldtext">x1</div>
-				<div class="subtext">Passenger(s)</div>
-				<div style="font-size: 16px; font-weight: 400; letter-spacing: 0.5px;" >1x Adult</div>
-			</div>
+  <div class="trip-info">
+    <div class="trip-section">
+      <div class="boldtext">x1</div>
+      <div class="subtext">Passenger(s)</div>
+      <div style="font-size: 16px; font-weight: 400; letter-spacing: 0.5px;" >1x Adult</div>
+    </div>
 
-			<div>
-				<svg class="trip-divider" width="24" height="103" viewBox="0 0 24 103" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M12 0.5V103" stroke="#B3B6BB"/>
-					<path d="M12 36C6 36 0 36.75 0 42V56.25C0 59.145 2.355 61.5 5.25 61.5L3 63.75V64.5H6H9H13.2679H18H21V63.75L18.75 61.5C21.645 61.5 24 59.145 24 56.25V42C24 36.75 18 36 12 36ZM5.25 58.5C4.005 58.5 3 57.495 3 56.25C3 55.005 4.005 54 5.25 54C6.495 54 7.5 55.005 7.5 56.25C7.5 57.495 6.495 58.5 5.25 58.5ZM10.5 48H3V42H10.5V48ZM18.75 58.5C17.505 58.5 16.5 57.495 16.5 56.25C16.5 55.005 17.505 54 18.75 54C19.995 54 21 55.005 21 56.25C21 57.495 19.995 58.5 18.75 58.5ZM21 48H13.5V42H21V48Z" fill="#B3B6BB"/>
-				</svg>
-			</div>
+    <div>
+      <svg class="trip-divider" width="24" height="103" viewBox="0 0 24 103" fill="none">
+        <path d="M12 0.5V103" stroke="var(--ticket-light)"/>
+      </svg>
+    </div>
 
-			<div class="trip-section">
-				<svg width="36" height="27" viewBox="0 0 36 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path fill-rule="evenodd" clip-rule="evenodd" d="M35.5488 12.4429C35.8377 12.7234 36 13.1036 36 13.5C36 13.8964 35.8377 14.2766 35.5488 14.5571L23.2054 26.5239C23.0642 26.6709 22.8939 26.7887 22.7046 26.8705C22.5153 26.9523 22.311 26.9962 22.1038 26.9998C21.8967 27.0033 21.6909 26.9664 21.4988 26.8911C21.3067 26.8159 21.1321 26.7039 20.9856 26.5619C20.8391 26.4198 20.7236 26.2506 20.646 26.0644C20.5684 25.8781 20.5303 25.6786 20.534 25.4778C20.5376 25.2769 20.583 25.0788 20.6673 24.8953C20.7516 24.7119 20.8732 24.5467 21.0248 24.4098L30.7349 14.9959L1.54291 14.9959C1.13371 14.9959 0.74126 14.8383 0.451907 14.5577C0.162555 14.2772 -6.07445e-07 13.8967 -5.90104e-07 13.5C-5.72762e-07 13.1033 0.162555 12.7228 0.451908 12.4423C0.74126 12.1617 1.13371 12.0041 1.54291 12.0041L30.7349 12.0041L21.0248 2.59024C20.8732 2.45329 20.7516 2.28815 20.6673 2.10466C20.583 1.92117 20.5376 1.72309 20.534 1.52224C20.5303 1.32139 20.5684 1.12189 20.646 0.935627C20.7236 0.749367 20.8391 0.580168 20.9856 0.438125C21.1321 0.296081 21.3067 0.184102 21.4988 0.108868C21.6909 0.0336348 21.8967 -0.00331156 22.1039 0.000232192C22.311 0.00377595 22.5153 0.0477372 22.7046 0.129495C22.8939 0.211252 23.0642 0.32913 23.2054 0.476096L35.5488 12.4429Z" fill="#424951"/>
-				</svg>
-				<div class="subtext">One-way</div>
-			</div>
-		</div>
+    <div class="trip-section">
+      <svg width="36" height="27" viewBox="0 0 36 27" fill="none">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M35.5488 12.4429C35.8377 12.7234 36 13.1036 36 13.5C36 13.8964 35.8377 14.2766 35.5488 14.5571L23.2054 26.5239C23.0642 26.6709 22.8939 26.7887 22.7046 26.8705C22.5153 26.9523 22.311 26.9962 22.1038 26.9998C21.8967 27.0033 21.6909 26.9664 21.4988 26.8911C21.3067 26.8159 21.1321 26.7039 20.9856 26.5619C20.8391 26.4198 20.7236 26.2506 20.646 26.0644C20.5684 25.8781 20.5303 25.6786 20.534 25.4778C20.5376 25.2769 20.583 25.0788 20.6673 24.8953C20.7516 24.7119 20.8732 24.5467 21.0248 24.4098L30.7349 14.9959L1.54291 14.9959C1.13371 14.9959 0.74126 14.8383 0.451907 14.5577C0.162555 14.2772 -6.07445e-07 13.8967 -5.90104e-07 13.5C-5.72762e-07 13.1033 0.162555 12.7228 0.451908 12.4423C0.74126 12.1617 1.13371 12.0041 1.54291 12.0041L30.7349 12.0041L21.0248 2.59024C20.8732 2.45329 20.7516 2.28815 20.6673 2.10466C20.583 1.92117 20.5376 1.72309 20.534 1.52224C20.5303 1.32139 20.5684 1.12189 20.646 0.935627C20.7236 0.749367 20.8391 0.580168 20.9856 0.438125C21.1321 0.296081 21.3067 0.184102 21.4988 0.108868C21.6909 0.0336348 21.8967 -0.00331156 22.1039 0.000232192C22.311 0.00377595 22.5153 0.0477372 22.7046 0.129495C22.8939 0.211252 23.0642 0.32913 23.2054 0.476096L35.5488 12.4429Z" fill="#424951"/>
+      </svg>
+      <div class="subtext">One-way</div>
+    </div>
+  </div>
 
-		<div class="ticket-details">
-			<div class="ticket-number">Ticket Number: <span class="ticket-no" style="font-weight: 500;">MZ63824632</span></div>
-			<div class="ticket-code">
-				<svg width="344" height="55" viewBox="0 0 344 55" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<!-- barcode-like verticals -->
-					<path d="M337.857 0H344V55H337.857V0Z" fill="#B3B6BB"/>
-					<path d="M331.714 0H334.786V55H331.714V0Z" fill="#B3B6BB"/>
-					<path d="M322.5 0H325.571V55H322.5V0Z" fill="#B3B6BB"/>
-					<path d="M307.143 0H310.214V55H307.143V0Z" fill="#B3B6BB"/>
-					<!-- ... trimmed for brevity (kept in file) -->
-				</svg>
-				<div class="activebg">
-					<div class="status">ACTIVE</div>
-				</div>
-			</div>
-		</div>
+  <div class="ticket-details">
+    <div class="ticket-number">Ticket Number: <span class="ticket-no" style="font-weight: 500;">MZ63824632</span></div>
+    <div class="ticket-code">
+      <svg width="344" height="55" viewBox="0 0 344 55" fill="none" style="position:absolute; top:0; left:0;">
+        <rect width="344" height="55" fill="var(--ticket-light)" />
+      </svg>
+      <div class="activebg">
+        <div class="status">ACTIVE</div>
+      </div>
+    </div>
+  </div>
 
-		<div class="timers">
-			<div class="timersection">
-				<div class="timertitle">CURRENT DATE & TIME:</div>
-				<div class="showtime" id="currentTime">--</div>
-			</div>
-			<div class="timersection">
-				<div class="timertitle">TIME SINCE ACTIVATION:</div>
-				<div class="showtime" id="elapsedTime">--</div>
-			</div>
-		</div>
+  <div class="timers">
+    <div class="timersection">
+      <div class="timertitle">CURRENT DATE & TIME:</div>
+      <div class="showtime" id="currentTime">--</div>
+    </div>
+    <div class="timersection">
+      <div class="timertitle">TIME SINCE ACTIVATION:</div>
+      <div class="showtime" id="elapsedTime">--</div>
+    </div>
+  </div>
 
-		<div class="notice">
-			Please show proof of your ticket to the<br>
-			Customer Protective Officers when<br>
-			asked
-			<div class="countdown" id="countdown">--:--:--</div>
-		</div>
+  <div class="notice">
+    Please show proof of your ticket to the<br>
+    Customer Protective Officers when<br>
+    asked
+    <div class="countdown" id="countdown">--:--:--</div>
+  </div>
 
-		<div class="back-wrapper">
-			<button id="openOverlayBtn" class="btn btn-back">Change Ticket</button>
-		</div>
+  <div class="back-wrapper">
+    <button id="openOverlayBtn" class="btn btn-back">Change Ticket</button>
+  </div>
 </div>
 
 <!-- Fullscreen overlay modal -->
 <div id="overlay" class="overlay">
-	<div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-		<h2 id="modalTitle">Select pickup, drop-off and ticket color</h2>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <h2 id="modalTitle">Select pickup, drop-off and ticket color</h2>
 
-		<div class="form-row">
-			<label for="pickupSelect">Pickup</label>
-			<select id="pickupSelect">
-				<option value="University of Waterloo Terminal">University of Waterloo Terminal</option>
-				<option value="Centennial College">Centennial College</option>
-			</select>
-		</div>
+    <div class="form-row">
+      <label for="pickupSelect">Pickup</label>
+      <select id="pickupSelect">
+        <option value="University of Waterloo Terminal">University of Waterloo Terminal</option>
+        <option value="Centennial College">Centennial College</option>
+      </select>
+    </div>
 
-		<div class="form-row">
-			<label for="dropoffSelect">Drop-off</label>
-			<select id="dropoffSelect">
-				<option value="Centennial College">Centennial College</option>
-				<option value="University of Waterloo Terminal">University of Waterloo Terminal</option>
-			</select>
-		</div>
+    <div class="form-row">
+      <label for="dropoffSelect">Drop-off</label>
+      <select id="dropoffSelect">
+        <option value="Centennial College">Centennial College</option>
+        <option value="University of Waterloo Terminal">University of Waterloo Terminal</option>
+      </select>
+    </div>
 
-		<div class="form-row">
-			<label>Ticket color</label>
-			<div class="color-grid" id="colorGrid">
-				<!-- colors: Blue, Green, Grey, Purple, Pink -->
-				<div class="color-swatch selected" data-color="#1530B1" title="Blue" style="background:#1530B1;"></div>
-				<div class="color-swatch" data-color="#00853e" title="Green" style="background:#00853e;"></div>
-				<div class="color-swatch" data-color="#474747" title="Grey" style="background:#474747;"></div>
-				<div class="color-swatch" data-color="#6e298c" title="Purple" style="background:#6e298c;"></div>
-				<div class="color-swatch" data-color="#a31885" title="Pink" style="background:#a31885;"></div>
-			</div>
-		</div>
+    <div class="form-row">
+      <label>Ticket color</label>
+      <div class="color-grid" id="colorGrid">
+        <div class="color-swatch selected" data-color="#1530B1" title="Blue" style="background:#1530B1;"></div>
+        <div class="color-swatch" data-color="#00853e" title="Green" style="background:#00853e;"></div>
+        <div class="color-swatch" data-color="#474747" title="Grey" style="background:#474747;"></div>
+        <div class="color-swatch" data-color="#6e298c" title="Purple" style="background:#6e298c;"></div>
+        <div class="color-swatch" data-color="#a31885" title="Pink" style="background:#a31885;"></div>
+      </div>
+    </div>
 
-		<div class="row-actions">
-			<button id="continueBtn" class="btn-primary btn">Continue</button>
-		</div>
-	</div>
+    <div class="row-actions">
+      <button id="continueBtn" class="btn-primary btn">Continue</button>
+    </div>
+  </div>
 </div>
 
 <script>
-  // ---------- timer logic (preserves your original behaviour) ----------
-  const currentTimeEl = document.getElementById("currentTime");
-  const elapsedTimeEl = document.getElementById("elapsedTime");
-  const countdownEl = document.getElementById("countdown");
+const currentTimeEl = document.getElementById("currentTime");
+const elapsedTimeEl = document.getElementById("elapsedTime");
+const countdownEl = document.getElementById("countdown");
+const overlay = document.getElementById("overlay");
+const openOverlayBtn = document.getElementById("openOverlayBtn");
+const continueBtn = document.getElementById("continueBtn");
+const ticketRoot = document.getElementById("ticketRoot");
+const routeText = document.getElementById("routeText");
+const colorSwatches = document.querySelectorAll(".color-swatch");
+let startTime = new Date();
 
-  // Preset values (same as original)
-  const PRESET_ELAPSED_SECONDS = (21 * 60) + 46; // 21 minutes 46 seconds = 1306 seconds
-  const TOTAL_COUNTDOWN_SECONDS = 4 * 60 * 60;   // 4 hours = 14400 seconds
+function updateTimes(){
+  const now = new Date();
+  currentTimeEl.textContent = now.toLocaleTimeString();
+  const diffMs = now - startTime;
+  const diffHrs = Math.floor(diffMs / 3600000);
+  const diffMin = Math.floor((diffMs % 3600000)/60000);
+  const diffSec = Math.floor((diffMs % 60000)/1000);
+  elapsedTimeEl.textContent = `${diffHrs.toString().padStart(2,'0')}:${diffMin.toString().padStart(2,'0')}:${diffSec.toString().padStart(2,'0')}`;
 
-  const activationStart = new Date(Date.now() - PRESET_ELAPSED_SECONDS * 1000);
-  const countdownSeconds = TOTAL_COUNTDOWN_SECONDS;
+  // Countdown 24h from activation
+  const countdownMs = 24*3600*1000 - diffMs;
+  const h = Math.floor(countdownMs/3600000);
+  const m = Math.floor((countdownMs%3600000)/60000);
+  const s = Math.floor((countdownMs%60000)/1000);
+  countdownEl.textContent = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+}
+setInterval(updateTimes,1000);
 
-  function formatTime(s) {
-    const h = String(Math.floor(s / 3600)).padStart(2, '0');
-    const m = String(Math.floor((s % 3600) / 60)).padStart(2, '0');
-    const sec = String(s % 60).padStart(2, '0');
-    return `${h}:${m}:${sec}`;
-  }
+openOverlayBtn.addEventListener("click",()=>overlay.classList.remove("hidden"));
+continueBtn.addEventListener("click",()=>{
+  overlay.classList.add("hidden");
+  const pickup = document.getElementById("pickupSelect").value;
+  const dropoff = document.getElementById("dropoffSelect").value;
+  routeText.textContent = pickup + " to " + dropoff;
+});
 
-  function updateTimers() {
-    const now = new Date();
-    const elapsed = Math.floor((now - activationStart) / 1000);
-    const remaining = Math.max(countdownSeconds - elapsed, 0);
+colorSwatches.forEach(swatch=>{
+  swatch.addEventListener("click",()=>{
+    colorSwatches.forEach(s=>s.classList.remove("selected"));
+    swatch.classList.add("selected");
+    ticketRoot.style.setProperty("--ticket-bg", swatch.dataset.color);
 
-    const options = {
-      year: 'numeric', month: 'long', day: 'numeric',
-      hour: '2-digit', minute: '2-digit', second: '2-digit',
-      hour12: true
-    };
-
-    currentTimeEl.textContent = now.toLocaleString('en-US', options);
-    elapsedTimeEl.textContent = formatTime(elapsed);
-    countdownEl.textContent = remaining === 0 ? "EXPIRED" : formatTime(remaining);
-  }
-
-  setInterval(updateTimers, 1000);
-  updateTimers();
-
-  // ---------- overlay & ticket interaction ----------
-  const overlay = document.getElementById('overlay');
-  const pickupSelect = document.getElementById('pickupSelect');
-  const dropoffSelect = document.getElementById('dropoffSelect');
-  const colorGrid = document.getElementById('colorGrid');
-  const continueBtn = document.getElementById('continueBtn');
-  const routeText = document.getElementById('routeText');
-  const openOverlayBtn = document.getElementById('openOverlayBtn');
-  const root = document.documentElement;
-
-  // default chosen color (matches initial CSS)
-  let chosenColor = "#1530B1";
-
-  // Color swatch click handling
-  colorGrid.addEventListener('click', (e) => {
-  	const sw = e.target.closest('.color-swatch');
-  	if(!sw) return;
-  	// remove selected from others
-  	document.querySelectorAll('.color-swatch').forEach(el => el.classList.remove('selected'));
-  	sw.classList.add('selected');
-  	chosenColor = sw.dataset.color;
-  	// preview change immediately on modal
-  	root.style.setProperty('--ticket-bg', chosenColor);
-  });
-
-  // Continue: apply selections and hide overlay
-  function applySelectionsAndClose(){
-  	const pickup = pickupSelect.value;
-  	const dropoff = dropoffSelect.value;
-  	// update route text
-  	routeText.textContent = `${pickup} to ${dropoff}`;
-  	// apply theme color
-  	root.style.setProperty('--ticket-bg', chosenColor || '#1530B1');
-
-  	// determine text color contrast (simple check)
-  	const isDark = isColorDark(chosenColor || '#1530B1');
-  	root.style.setProperty('--text-on-ticket', isDark ? '#ffffff' : '#000000');
-
-  	// hide overlay with a small fade
-  	overlay.classList.add('hidden');
-  	setTimeout(() => {
-  		overlay.style.display = 'none';
-  	}, 300);
-  }
-
-  continueBtn.addEventListener('click', () => {
-  	applySelectionsAndClose();
-  });
-
-  // reopen overlay (Back / Change Ticket)
-  openOverlayBtn.addEventListener('click', () => {
-  	overlay.style.display = 'flex';
-  	// small delay then remove hidden so fade in occurs
-  	setTimeout(()=> overlay.classList.remove('hidden'), 10);
-  });
-
-  // On first load show overlay (already visible by default). Ensure root vars set.
-  root.style.setProperty('--ticket-bg', chosenColor);
-  root.style.setProperty('--text-on-ticket', '#ffffff');
-
-  // Utility to estimate if color is dark (so text can be white)
-  function isColorDark(hex) {
-    if(!hex) return true;
-    hex = hex.replace('#','');
-    if(hex.length === 3) {
-      hex = hex.split('').map(c=>c+c).join('');
+    // compute lighter shade for divider/circle
+    function lightenColor(hex, percent){
+      const num=parseInt(hex.replace("#",""),16),
+            r=(num>>16),
+            g=(num>>8&0x00FF),
+            b=(num&0x0000FF);
+      return "#" + (0x1000000 + (Math.min(255,Math.floor(r + (255-r)*percent))<<16) + (Math.min(255,Math.floor(g + (255-g)*percent))<<8) + Math.min(255,Math.floor(b + (255-b)*percent))).toString(16).slice(1);
     }
-    const r = parseInt(hex.substr(0,2),16);
-    const g = parseInt(hex.substr(2,2),16);
-    const b = parseInt(hex.substr(4,2),16);
-    // luminance formula
-    const luminance = (0.2126*r + 0.7152*g + 0.0722*b);
-    return luminance < 150; // threshold tuned for readable contrast
-  }
-
-  // Close overlay if user presses Escape
-  window.addEventListener('keydown', (ev) => {
-  	if(ev.key === 'Escape' && overlay.style.display !== 'none'){
-  		// reopen overlay? We'll hide if they want to dismiss - but your spec wanted overlay until selected, so do nothing.
-  	}
+    ticketRoot.style.setProperty("--ticket-light", lightenColor(swatch.dataset.color,0.5));
   });
-
-  // Prevent accidental selection of same pickup & drop (optional: allow but notify)
-  pickupSelect.addEventListener('change', validateRoute);
-  dropoffSelect.addEventListener('change', validateRoute);
-
-  function validateRoute(){
-  	const p = pickupSelect.value;
-  	const d = dropoffSelect.value;
-  	if(p === d){
-  		// Allow same but show a small warning by changing border color (non-blocking)
-  		pickupSelect.style.borderColor = '#e07b7b';
-  		dropoffSelect.style.borderColor = '#e07b7b';
-  		// remove warning after 1.3s
-  		setTimeout(()=> {
-  			pickupSelect.style.borderColor = '';
-  			dropoffSelect.style.borderColor = '';
-  		}, 1300);
-  	}
-  }
-
-  // initial route text should reflect selects' defaults
-  routeText.textContent = `${pickupSelect.value} to ${dropoffSelect.value}`;
+});
 </script>
 </body>
 </html>
