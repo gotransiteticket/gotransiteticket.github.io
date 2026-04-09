@@ -140,17 +140,18 @@
 		position: absolute;
 		bottom: 20%;
 		left: 50%;
+		width: 60%;
 		transform: translateX(-50%);
 	}
 
 	.status{
 		color: var(--ticket-bg);
-		font-size: 22px;
+		font-size: 18px;
 		font-family: "Noto Sans Old Italic", sans-serif;
   		font-weight: 400;
   		font-style: normal;
-		-webkit-animation: fadeinout 10s linear infinite;
-		animation: fadeinout 10s linear infinite;
+		-webkit-animation: fadeinout 3s linear infinite;
+		animation: fadeinout 3s linear infinite;
 	}
 
 	@keyframes fadeinout {
@@ -334,7 +335,7 @@
 
 			<div class="route" id="routeText">University of Waterloo Terminal to Centennial College</div>
 			<svg class="circlepos" width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<circle cx="11.5" cy="11.5" r="10" fill="#1530B1" stroke="white" stroke-width="3"/>
+				<circle cx="11.5" cy="11.5" r="10" fill="#b30202" stroke="white" stroke-width="3"/>
 			</svg>
 		</div>
 
@@ -466,41 +467,56 @@
 
 <script>
   // ---------- timer logic (preserves your original behaviour) ----------
-  const currentTimeEl = document.getElementById("currentTime");
-  const elapsedTimeEl = document.getElementById("elapsedTime");
+const currentTimeEl = document.getElementById("currentTime");
   const countdownEl = document.getElementById("countdown");
 
-  // Preset values (same as original)
-  const PRESET_ELAPSED_SECONDS = 46; // 21 minutes 46 seconds = 1306 seconds
-  const TOTAL_COUNTDOWN_SECONDS = 5 * 60;   // 5 minutes = 300 seconds
+  // Start countdown at exactly 00:04:43
+  const TOTAL_COUNTDOWN_SECONDS = (4 * 60) + 43; // 283 seconds
 
-  const activationStart = new Date(Date.now() - PRESET_ELAPSED_SECONDS * 1000);
-  const countdownSeconds = TOTAL_COUNTDOWN_SECONDS;
+  // Store the moment the timer started
+  const activationStart = new Date();
 
-  function formatTime(s) {
-    const h = String(Math.floor(s / 3600)).padStart(2, '0');
-    const m = String(Math.floor((s % 3600) / 60)).padStart(2, '0');
-    const sec = String(s % 60).padStart(2, '0');
-    return `${h}:${m}:${sec}`;
+  function formatTime(seconds) {
+    const h = String(Math.floor(seconds / 3600)).padStart(2, '0');
+    const m = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+    const s = String(seconds % 60).padStart(2, '0');
+    return `${h}:${m}:${s}`;
   }
 
   function updateTimers() {
     const now = new Date();
-    const elapsed = Math.floor((now - activationStart) / 1000);
-    const remaining = Math.max(countdownSeconds - elapsed, 0);
 
+    // Calculate elapsed time
+    const elapsed = Math.floor((now - activationStart) / 1000);
+
+    // Calculate remaining countdown
+    const remaining = Math.max(TOTAL_COUNTDOWN_SECONDS - elapsed, 0);
+
+    // Format current date/time
     const options = {
-      year: 'numeric', month: 'long', day: 'numeric',
-      hour: '2-digit', minute: '2-digit', second: '2-digit',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
       hour12: true
     };
 
-    currentTimeEl.textContent = now.toLocaleString('en-US', options);
-    elapsedTimeEl.textContent = formatTime(elapsed);
-    countdownEl.textContent = remaining === 0 ? "EXPIRED" : formatTime(remaining);
+    // Update UI
+    currentTimeEl.textContent =
+      now.toLocaleString('en-US', options);
+
+    countdownEl.textContent =
+      remaining === 0
+        ? "EXPIRED"
+        : formatTime(remaining);
   }
 
+  // Run every second
   setInterval(updateTimers, 1000);
+
+  // Run immediately on load
   updateTimers();
 
   // ---------- overlay & ticket interaction ----------
