@@ -160,7 +160,7 @@
 
 	.timers{
 		display: flex;
-		justify-content: space-between;
+		justify-content: center;
 		padding: 10px 10px;
 		align-items: center;
 		text-align: center;
@@ -399,7 +399,7 @@
 					<!-- ... trimmed for brevity (kept in file) -->
 				</svg>
 				<div class="activebg">
-					<div class="status">ACTIVE</div>
+					<div class="status">NOT VALID FOR TRAVEL</div>
 				</div>
 			</div>
 		</div>
@@ -409,16 +409,14 @@
 				<div class="timertitle">CURRENT DATE & TIME:</div>
 				<div class="showtime" id="currentTime">--</div>
 			</div>
-			<div class="timersection">
+			<!--<div class="timersection">
 				<div class="timertitle">TIME SINCE ACTIVATION:</div>
 				<div class="showtime" id="elapsedTime">--</div>
-			</div>
+			</div>-->
 		</div>
 
 		<div class="notice">
-			Please show proof of your ticket to the<br>
-			Customer Protective Officers when<br>
-			asked
+			Your ticket will be active in
 			<div class="countdown" id="countdown">--:--:--</div>
 		</div>
 
@@ -427,7 +425,7 @@
 		</div>
 </div>
 
-<!-- Fullscreen overlay modal -->
+<!-- Fullscreen overlay modal 
 <div id="overlay" class="overlay">
 	<div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
 		<h2 id="modalTitle">Select pickup, drop-off and ticket color</h2>
@@ -451,7 +449,7 @@
 		<div class="form-row">
 			<label>Ticket color</label>
 			<div class="color-grid" id="colorGrid">
-				<!-- colors: Blue, Green, Grey, Purple, Pink -->
+				<!-- colors: Blue, Green, Grey, Purple, Pink 
 				<div class="color-swatch selected" data-color="#1530B1" title="Blue" style="background:#1530B1;"></div>
 				<div class="color-swatch" data-color="#00853e" title="Green" style="background:#00853e;"></div>
 				<div class="color-swatch" data-color="#474747" title="Grey" style="background:#474747;"></div>
@@ -464,7 +462,7 @@
 			<button id="continueBtn" class="btn-primary btn">Continue</button>
 		</div>
 	</div>
-</div>
+</div> -->
 
 <script>
   // ---------- timer logic (preserves your original behaviour) ----------
@@ -473,8 +471,8 @@
   const countdownEl = document.getElementById("countdown");
 
   // Preset values (same as original)
-  const PRESET_ELAPSED_SECONDS = (21 * 60) + 46; // 21 minutes 46 seconds = 1306 seconds
-  const TOTAL_COUNTDOWN_SECONDS = 4 * 60 * 60;   // 4 hours = 14400 seconds
+  const PRESET_ELAPSED_SECONDS = 46; // 21 minutes 46 seconds = 1306 seconds
+  const TOTAL_COUNTDOWN_SECONDS = 5 * 60;   // 5 minutes = 300 seconds
 
   const activationStart = new Date(Date.now() - PRESET_ELAPSED_SECONDS * 1000);
   const countdownSeconds = TOTAL_COUNTDOWN_SECONDS;
